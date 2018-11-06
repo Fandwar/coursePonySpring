@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,6 +48,23 @@ public class CourseController {
 	@PostMapping("/")
 	public @Valid Course save(@RequestBody @Valid Course course ) {
 		return courseDAO.save(course);
+	}
+	
+	@PutMapping("/{id}")
+	public @Valid Course update(@PathVariable(value = "id") Long courseId, @RequestBody @Valid Course course) {
+		
+		Optional<Course> race = courseDAO.findById(courseId);
+		if (race.isPresent()) {
+			race.get().setLocation( course.getLocation() );
+			race.get().setDate( course.getDate() );
+			race.get().setPonies( course.getPonies() );
+			
+			Course raceUp = courseDAO.save(race.get());
+			
+			return raceUp;
+			
+		}
+		throw new ResourceNotFoundException( "Course not found" );	
 	}
 	
 	
