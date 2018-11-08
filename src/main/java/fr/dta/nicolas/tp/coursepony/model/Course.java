@@ -5,14 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -32,7 +25,8 @@ public class Course {
 	private Date date;
 	
 	@Column
-	@OneToMany
+	@ManyToMany
+	@JoinTable(name="course_pony",  joinColumns=@JoinColumn(name="course_id"), inverseJoinColumns=@JoinColumn(name="ponies_id"))
 	private List<Pony> ponies = new ArrayList<Pony>();
 	
 	public Course() {	

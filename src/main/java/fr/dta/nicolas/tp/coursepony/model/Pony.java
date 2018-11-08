@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
-@Entity
+@Entity 
 @EntityListeners(AuditingEntityListener.class)
 @Table(name="pony")
 public class Pony {
